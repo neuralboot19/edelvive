@@ -6,12 +6,12 @@ class Api::ComunicadosController < ApplicationController
     comunicados = Comunicado.where(creador: mayores).or(Comunicado.where(receptor: mayores))
     comunicados_con_adjuntos = comunicados.includes(:adjuntos)
     
-    response = {
-      comunicados: comunicados_con_adjuntos,
-      numero_adjuntos: comunicados_con_adjuntos.sum { |comunicado| comunicado.adjuntos.size }
-    }
+    numero_adjuntos = comunicados_con_adjuntos.sum { |comunicado| comunicado.adjuntos.size }
     
-    render json: response
+    render json: {
+      comunicados: comunicados_con_adjuntos,
+      numero_adjuntos: numero_adjuntos
+    }
   end
 
   def suma_factorial
