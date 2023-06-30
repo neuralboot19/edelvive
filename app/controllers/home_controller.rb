@@ -10,16 +10,9 @@ class HomeController < ApplicationController
     indice = 0
   
     num_subdivisiones.times do |i|
-      elementos = elementos_por_subdivision
-      elementos += 1 if i < resto
-  
-      subdivision = []
-  
-      elementos.times do
-        subdivision << array[indice]
-        indice += 1
-      end
-  
+      elementos = elementos_por_subdivision + (i < resto ? 1 : 0)
+      subdivision = array.slice(indice, elementos)
+      indice += elementos
       @resultado << subdivision
     end
   
